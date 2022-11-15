@@ -1,13 +1,13 @@
-import FavoriteRestoIdb from '../data/favorite-resto-idb';
 import {
   createLikeRestoButtonTemplate,
   createUnlikeRestoButtonTemplate,
 } from '../views/templetes/template-creator';
 
 const LikeButtonPresenter = {
-  async init({ likeButtonContainer, resto }) {
+  async init({ likeButtonContainer, favoriteResto, resto }) {
     this._likeButtonContainer = likeButtonContainer;
     this._resto = resto;
+    this._favoriteResto = favoriteResto;
 
     await this._renderButton();
   },
@@ -23,7 +23,7 @@ const LikeButtonPresenter = {
   },
 
   async _isRestoExist(id) {
-    const resto = await FavoriteRestoIdb.getResto(id);
+    const resto = await this._favoriteResto.getResto(id);
     return !!resto;
   },
 
@@ -32,7 +32,7 @@ const LikeButtonPresenter = {
 
     const likeButton = document.querySelector('#likeButton');
     likeButton.addEventListener('click', async () => {
-      await FavoriteRestoIdb.putResto(this._resto);
+      await this._favoriteResto.putResto(this._resto);
       this._renderButton();
     });
   },
@@ -42,7 +42,7 @@ const LikeButtonPresenter = {
 
     const likeButton = document.querySelector('#likeButton');
     likeButton.addEventListener('click', async () => {
-      await FavoriteRestoIdb.deleteResto(this._resto.id);
+      await this._favoriteResto.deleteResto(this._resto.id);
       this._renderButton();
     });
   },
