@@ -28,13 +28,18 @@ class FavoriteRestoSearchPresenter {
   }
 
   _showFoundRestos(restos) {
-    const html = restos.reduce(
-      (carry, resto) =>
-        carry.concat(
-          `<li class="resto"><span class="resto__title">${resto.title || '-'}</span></li>`
-        ),
-      ''
-    );
+    let html;
+    if (restos.length > 0) {
+      html = restos.reduce(
+        (carry, resto) =>
+          carry.concat(
+            `<li class="resto"><span class="resto__title">${resto.title || '-'}</span></li>`
+          ),
+        ''
+      );
+    } else {
+      html = '<div class="restos__not__found">Film tidak ditemukan</div>';
+    }
 
     document.querySelector('.restos').innerHTML = html;
     document
