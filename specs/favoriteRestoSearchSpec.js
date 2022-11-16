@@ -64,13 +64,51 @@ describe('Searching restos', () => {
       { id: 2, title: 'Dua' },
     ]);
 
-    const movieTitles = document.querySelectorAll('.resto__title');
-    expect(movieTitles.item(0).textContent).toEqual('Satu');
-    expect(movieTitles.item(1).textContent).toEqual('Dua');
+    const restoTitles = document.querySelectorAll('.resto__title');
+    expect(restoTitles.item(0).textContent).toEqual('Satu');
+    expect(restoTitles.item(1).textContent).toEqual('Dua');
   });
 
   it('should show - for found resto without title', () => {
     presenter._showFoundRestos([{ id: 1 }]);
     expect(document.querySelectorAll('.resto__title').item(0).textContent).toEqual('-');
+  });
+
+  it('should show the restos found by Favorite restos', (done) => {
+    document
+      .getElementById('resto-search-container')
+      .addEventListener('restos:searched:updated', () => {
+        expect(document.querySelectorAll('.resto').length).toEqual(3);
+        done();
+      });
+
+    FavoriteRestoIdb.searchRestos.withArgs('resto a').and.returnValues([
+      { id: 111, title: 'resto abc' },
+      { id: 222, title: 'ada juga resto abcde' },
+      { id: 333, title: 'ini juga boleh resto a' },
+    ]);
+
+    searchRestos('resto a');
+  });
+
+  it('should show the name of the restos found by Favorite Restos', (done) => {
+    document
+      .getElementById('resto-search-container')
+      .addEventListener('restos:searched:updated', () => {
+        const restoTitles = document.querySelectorAll('.resto__title');
+        expect(restoTitles.item(0).textContent).toEqual('resto abc');
+        expect(restoTitles.item(1).textContent).toEqual('ada juga resto abcde');
+        expect(restoTitles.item(2).textContent).toEqual('ini juga boleh resto a');
+
+        done();
+      });
+
+    FavoriteRestoIdb.searchRestos.withArgs('resto a').and.returnValues([
+      { id: 111, title: 'resto abc' },
+      { id: 222, title: 'ada juga resto abcde' },
+      { id: 333, title: 'ini juga boleh resto a' },
+    ]);
+
+    searchRestos('resto a');
   });
 });
