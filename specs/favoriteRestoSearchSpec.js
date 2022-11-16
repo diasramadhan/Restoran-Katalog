@@ -96,36 +96,6 @@ describe('Searching restos', () => {
     expect(favoriteRestos.searchRestos).toHaveBeenCalledWith('resto a');
   });
 
-  it('should show the found restos', () => {
-    presenter._showFoundRestos([{ id: 1 }]);
-    expect(document.querySelectorAll('.resto').length).toEqual(1);
-
-    presenter._showFoundRestos([
-      { id: 1, title: 'Satu' },
-      { id: 2, title: 'Dua' },
-    ]);
-    expect(document.querySelectorAll('.resto').length).toEqual(2);
-  });
-
-  it('should show the title of the found restos', () => {
-    presenter._showFoundRestos([{ id: 1, title: 'Satu' }]);
-    expect(document.querySelectorAll('.resto__title').item(0).textContent).toEqual('Satu');
-
-    presenter._showFoundRestos([
-      { id: 1, title: 'Satu' },
-      { id: 2, title: 'Dua' },
-    ]);
-
-    const restoTitles = document.querySelectorAll('.resto__title');
-    expect(restoTitles.item(0).textContent).toEqual('Satu');
-    expect(restoTitles.item(1).textContent).toEqual('Dua');
-  });
-
-  it('should show - for found resto without title', () => {
-    presenter._showFoundRestos([{ id: 1 }]);
-    expect(document.querySelectorAll('.resto__title').item(0).textContent).toEqual('-');
-  });
-
   it('should show the restos found by Favorite restos', (done) => {
     document
       .getElementById('resto-search-container')
@@ -160,6 +130,21 @@ describe('Searching restos', () => {
       { id: 222, title: 'ada juga resto abcde' },
       { id: 333, title: 'ini juga boleh resto a' },
     ]);
+
+    searchRestos('resto a');
+  });
+
+  it('should show - when the resto returned does not contain a title', (done) => {
+    document
+      .getElementById('resto-search-container')
+      .addEventListener('restos:searched:updated', () => {
+        const restoTitles = document.querySelectorAll('.resto__title');
+        expect(restoTitles.item(0).textContent).toEqual('-');
+
+        done();
+      });
+
+    favoriteRestos.searchRestos.withArgs('resto a').and.returnValues([{ id: 444 }]);
 
     searchRestos('resto a');
   });
