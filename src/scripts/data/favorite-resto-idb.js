@@ -21,16 +21,26 @@ const FavoriteRestoIdb = {
   async getAllResto() {
     return (await dbPromise).getAll(OBJECT_STORE_NAME);
   },
-  async putResto(movie) {
-    if (!movie.hasOwnProperty('id')) {
+  async putResto(resto) {
+    if (!resto.hasOwnProperty('id')) {
       return;
     }
-    return (await dbPromise).put(OBJECT_STORE_NAME, movie);
+    return (await dbPromise).put(OBJECT_STORE_NAME, resto);
   },
   async deleteResto(id) {
     return (await dbPromise).delete(OBJECT_STORE_NAME, id);
   },
-  async searchRestos(query) {},
+  async searchRestos(query) {
+    return (await this.getAllResto()).filter((resto) => {
+      const loweredCaseRestoTitle = (resto.title || '-').toLowerCase();
+      const jammedRestoTitle = loweredCaseRestoTitle.replace(/\s/g, '');
+
+      const loweredCaseQuery = query.toLowerCase();
+      const jammedQuery = loweredCaseQuery.replace(/\s/g, '');
+
+      return jammedRestoTitle.indexOf(jammedQuery) !== -1;
+    });
+  },
 };
 
 export default FavoriteRestoIdb;

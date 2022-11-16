@@ -33,6 +33,18 @@ const FavoriteRestoArray = {
     // kecuali film dengan id == id
     favoriteResto = favoriteResto.filter((resto) => resto.id !== id);
   },
+
+  searchRestos(query) {
+    return this.getAllResto().filter((resto) => {
+      const loweredCaseRestoTitle = (resto.title || '-').toLowerCase();
+      const jammedRestoTitle = loweredCaseRestoTitle.replace(/\s/g, '');
+
+      const loweredCaseQuery = query.toLowerCase();
+      const jammedQuery = loweredCaseQuery.replace(/\s/g, '');
+      
+      return jammedRestoTitle.indexOf(jammedQuery) !== -1;
+    });
+  },
 };
 
 describe('Favorite resto Array Contract Test Implementation', () => {
