@@ -3,6 +3,7 @@ import FavoriteRestoIdb from '../src/scripts/data/favorite-resto-idb';
 
 describe('Searching restos', () => {
   let presenter;
+  let favoriteRestos;
 
   const searchRestos = (query) => {
     const queryElement = document.getElementById('query');
@@ -23,13 +24,43 @@ describe('Searching restos', () => {
   };
 
   const constructPresenter = () => {
-    spyOn(FavoriteRestoIdb, 'searchRestos');
-    presenter = new FavoriteRestoSearchPresenter({ favoriteRestos: FavoriteRestoIdb });
+    favoriteRestos = spyOnAllFunctions(FavoriteRestoIdb);
+    presenter = new FavoriteRestoSearchPresenter({ favoriteRestos });
   };
 
   beforeEach(() => {
     setRestoSearchContainer();
     constructPresenter();
+  });
+
+  describe('When query is not empty', () => {
+    // ... Pemangkasan
+  });
+
+  describe('When query is empty', () => {
+    it('should capture the query as empty', () => {
+      searchRestos(' ');
+      expect(presenter.latestQuery.length).toEqual(0);
+    });
+
+    it('should show all favorite restos', () => {
+      searchRestos('    ');
+      expect(favoriteRestos.getAllResto).toHaveBeenCalled();
+    });
+  });
+
+  it('should capture the query as empty', () => {
+    searchRestos(' ');
+    expect(presenter.latestQuery.length).toEqual(0);
+
+    searchRestos('    ');
+    expect(presenter.latestQuery.length).toEqual(0);
+
+    searchRestos('');
+    expect(presenter.latestQuery.length).toEqual(0);
+
+    searchRestos('\t');
+    expect(presenter.latestQuery.length).toEqual(0);
   });
 
   it('should be able to capture the query typed by the user', () => {
@@ -38,10 +69,10 @@ describe('Searching restos', () => {
     expect(presenter.latestQuery).toEqual('resto a');
   });
 
-  it('should ask the model to search for liked restos', () => {
+  it('should ask the model to search for restos', () => {
     searchRestos('resto a');
 
-    expect(FavoriteRestoIdb.searchRestos).toHaveBeenCalledWith('resto a');
+    expect(favoriteRestos.searchRestos).toHaveBeenCalledWith('resto a');
   });
 
   it('should show the found restos', () => {
@@ -82,7 +113,7 @@ describe('Searching restos', () => {
         done();
       });
 
-    FavoriteRestoIdb.searchRestos.withArgs('resto a').and.returnValues([
+    favoriteRestos.searchRestos.withArgs('resto a').and.returnValues([
       { id: 111, title: 'resto abc' },
       { id: 222, title: 'ada juga resto abcde' },
       { id: 333, title: 'ini juga boleh resto a' },
@@ -103,7 +134,7 @@ describe('Searching restos', () => {
         done();
       });
 
-    FavoriteRestoIdb.searchRestos.withArgs('resto a').and.returnValues([
+    favoriteRestos.searchRestos.withArgs('resto a').and.returnValues([
       { id: 111, title: 'resto abc' },
       { id: 222, title: 'ada juga resto abcde' },
       { id: 333, title: 'ini juga boleh resto a' },
