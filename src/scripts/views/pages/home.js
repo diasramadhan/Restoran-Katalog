@@ -15,12 +15,16 @@ const Home = {
     const restorans = await RestoDataSource.getAllResto();
     const restoList = document.getElementById('resto-list');
 
-    let card = '';
-    restorans.forEach((resto) => {
-      card += showCardResto(resto);
-    });
+    if (restorans.length === 0) {
+      restoList.innerHTML = '<h2>Konten gagal dimuat (pastikan anda terhubung dengan jaringan)</h2>';
+    } else {
+      let card = '';
+      restorans.forEach((resto) => {
+        card += showCardResto(resto);
+      });
 
-    restoList.innerHTML = card;
+      restoList.innerHTML = card;
+    }
   },
 };
 

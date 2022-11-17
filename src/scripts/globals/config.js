@@ -7,7 +7,7 @@ const CONFIG = {
   DATABASE_NAME: 'warelog-idb',
   DATABASE_VERSION: 1,
   OBJECT_STORE_NAME: 'restaurant',
-  CACHE_NAME: new Date().toISOString(),
+  CACHE_NAME: 'cache-warelog',
 };
 
 export default CONFIG;

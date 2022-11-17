@@ -1,3 +1,5 @@
+import { showCardResto } from '../../templetes/template-creator';
+
 class FavoriteRestoSearchView {
   getTemplate() {
     return `
@@ -9,6 +11,16 @@ class FavoriteRestoSearchView {
         </div>
       </div>
     `;
+  }
+
+  getFavoriteRestoTemplate() {
+    return `
+      <div class="content">
+          <h2 class="content__heading">Your Liked Resto</h2>
+          <div id="restos" class="restos">
+          </div>
+      </div>
+      `;
   }
 
   runWhenUserIsSearching(callback) {
@@ -36,6 +48,19 @@ class FavoriteRestoSearchView {
     document
       .getElementById('resto-search-container')
       .dispatchEvent(new Event('restos:searched:updated'));
+  }
+
+  showFavoriteRestos(restos = []) {
+    let html;
+    if (restos.length) {
+      html = restos.reduce((carry, resto) => carry.concat(showCardResto(resto)), '');
+    } else {
+      html = '<div class="resto-item__not__found"></div>';
+    }
+
+    document.getElementById('restos').innerHTML = html;
+
+    document.getElementById('restos').dispatchEvent(new Event('restos:updated'));
   }
 }
 
