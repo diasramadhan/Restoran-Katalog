@@ -1,7 +1,13 @@
 const DrawerInitiator = {
-  init({ menuBtn, nav, header }) {
+  init({
+    menuBtn, nav, header, content,
+  }) {
     menuBtn.addEventListener('click', () => {
       this._toggleDrawer(menuBtn, nav);
+    });
+
+    content.addEventListener('click', () => {
+      nav.classList.remove('active');
     });
 
     menuBtn.onkeypress = () => {

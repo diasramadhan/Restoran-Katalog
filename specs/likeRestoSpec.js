@@ -27,7 +27,9 @@ describe('Liking A Resto', () => {
 
     document.querySelector('#likeButton').dispatchEvent(new Event('click'));
     const resto = await FavoriteRestoIdb.getResto(1);
+
     expect(resto).toEqual({ id: 1 });
+
     FavoriteRestoIdb.deleteResto(1);
   });
 
@@ -40,6 +42,7 @@ describe('Liking A Resto', () => {
     document.querySelector('#likeButton').dispatchEvent(new Event('click'));
     // tidak ada resto yang ganda
     expect(await FavoriteRestoIdb.getAllResto()).toEqual([{ id: 1 }]);
+
     FavoriteRestoIdb.deleteResto(1);
   });
 
@@ -47,6 +50,7 @@ describe('Liking A Resto', () => {
     await TestFactories.createLikeButtonPresenterWithResto({});
 
     document.querySelector('#likeButton').dispatchEvent(new Event('click'));
+
     expect(await FavoriteRestoIdb.getAllResto()).toEqual([]);
   });
 });

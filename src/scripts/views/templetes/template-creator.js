@@ -1,30 +1,32 @@
 import CONFIG from '../../globals/config';
 
 const showCardResto = (resto) => `
-        <article class="resto-item">
-            <div class="resto-thumb">
-              <img src="${CONFIG.MEDIUM_BASE_IMAGE_URL}${resto.pictureId}" alt="${resto.name}" />
-              <p class="resto-rating">
-                <i class="fas fa-star"></i>${resto.rating}
-              </p>
-              <p class="resto-location">
-                <i class="fa-sharp fa-solid fa-location-dot"></i>${resto.city}
-              </p>
-            </div>
+  <article class="resto-item">
+    <div class="resto-thumb">
+      <img src="${CONFIG.MEDIUM_BASE_IMAGE_URL}${resto.pictureId || '-'}" alt="${
+  resto.name || 'resto-picture'
+}" />
+      <p class="resto-rating">
+        <i class="fas fa-star"></i>${resto.rating || '-'}
+      </p>
+      <p class="resto-location">
+        <i class="fa-sharp fa-solid fa-location-dot"></i>${resto.city || '-'}
+      </p>
+    </div>
 
-            <div class="resto-content">
-              <a href="/#/detail/${resto.id}" class="resto-title">${resto.name}</a>
-              <p>
-                ${resto.description}
-              </p>
-            </div>
-            </article>
-            `;
+    <div class="resto-content">
+      <a href="/#/detail/${resto.id}" class="resto-title resto__title">${resto.name || '-'}</a>
+      <p>
+        ${resto.description || '-'}
+      </p>
+    </div>
+  </article>
+  `;
 
 const sectionDetail = (resto) => `
   <section class="detail">
     <article class="description-detail">
-      <h3>${resto.name}</h3>
+      <h3 class="resto__title">${resto.name}</h3>
       <div class="desc__content">
         <div class="thumbnail">
           <div class="resto-img">

@@ -14,6 +14,7 @@ const app = new App({
   menuBtn: document.getElementById('menu-btn'),
   nav: document.querySelector('header .app-bar nav'),
   header: document.querySelector('header'),
+  content: document.getElementById('maincontent'),
 });
 
 window.addEventListener('hashchange', () => {

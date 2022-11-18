@@ -1,11 +1,11 @@
 import FavoriteRestoIdb from '../src/scripts/data/favorite-resto-idb';
 import * as TestFactories from './helpers/testFactories';
 
-describe('Unliking A Resto', () => {
-  const addLikeButtonContainer = () => {
-    document.body.innerHTML = '<div id="likeButtonContainer"></div>';
-  };
+const addLikeButtonContainer = () => {
+  document.body.innerHTML = '<div id="likeButtonContainer"></div>';
+};
 
+describe('Unliking A Resto', () => {
   beforeEach(async () => {
     addLikeButtonContainer();
     await FavoriteRestoIdb.putResto({ id: 1 });
@@ -39,8 +39,10 @@ describe('Unliking A Resto', () => {
 
     // hapus dulu film dari daftar film yang disukai
     await FavoriteRestoIdb.deleteResto(1);
+
     // kemudian, simulasikan pengguna menekan widget batal menyukai film
     document.querySelector('[aria-label="unlike this resto"]').dispatchEvent(new Event('click'));
+
     expect(await FavoriteRestoIdb.getAllResto()).toEqual([]);
   });
 });

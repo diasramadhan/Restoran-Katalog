@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FF5800;
+  background-color: #ff5800;
 
   position: fixed;
   bottom: 16px;
@@ -15,4 +15,9 @@
   font-size: 18px;
   color: white;
   cursor: pointer;
+}
+
+.restos__not__found {
+  color: yellow;
+  font-size: 2rem;
 }
