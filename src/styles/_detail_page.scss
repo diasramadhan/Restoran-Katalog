@@ -130,7 +130,7 @@ form {
 
 input[type='text'],
 textarea {
-  padding: 24px;
+  padding: 16px;
   margin: 10px 0;
   border-radius: 8px;
   border: 2px solid #d0d0d0;
@@ -152,7 +152,7 @@ button[type='submit'] {
   border: none;
   border-radius: 8px;
   color: white;
-  padding: 24px 30px;
+  padding: 16px 20px;
   font-size: 0.95em;
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out, background-color 0.2s ease-in-out;
@@ -160,7 +160,7 @@ button[type='submit'] {
   display: flex;
   justify-content: center;
   font-weight: bolder;
-  font-size: 1.6rem;
+  font-size: 2rem;
 
   &:active {
     background-color: #3d3d3d;
