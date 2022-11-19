@@ -3,9 +3,17 @@ import CONFIG from '../../globals/config';
 const showCardResto = (resto) => `
   <article class="resto-item">
     <div class="resto-thumb">
-      <img src="${CONFIG.MEDIUM_BASE_IMAGE_URL}${resto.pictureId || '-'}" alt="${
-  resto.name || 'resto-picture'
-}" />
+      <picture>
+        <source type="image/webp" data-srcset="${
+  CONFIG.BASE_IMAGE_SMALL + resto.pictureId
+}" media="all and (max-width: 600px)">
+        <source type="image/jpeg" data-srcset="${
+  CONFIG.MEDIUM_BASE_IMAGE_URL + resto.pictureId
+}" media="all and (min-width: 601px)">
+        <img class="lazyload" data-src="${CONFIG.BASE_IMAGE_LARGE + resto.pictureId}" alt="${
+  resto.name
+}">
+  </picture>
       <p class="resto-rating">
         <i class="fas fa-star"></i>${resto.rating || '-'}
       </p>
