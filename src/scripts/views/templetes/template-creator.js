@@ -88,7 +88,10 @@ const listReviewCustomer = (reviews) => {
 const sectionFormReview = () => `
   <h2>Form Add Review</h2>
   <section class="review-form">
-    <img src="./images/user.png" alt="Foto akun Anda" width="48" height="48" class="reviewer_photo">
+    <picture>
+      <source type="image/webp" srcset="./images/user.webp">
+      <img src="./images/user.png" alt="Foto akun Anda" width="48" height="48" class="reviewer_photo">
+    </picture>
     <form id="review-form" autocomplete="off">
       <input type="text" id="input-name" name="name" placeholder="Masukkan nama Kamu...">
       <textarea name="review" id="input-review" rows="5" placeholder="Masukkan review Kamu..."></textarea>
